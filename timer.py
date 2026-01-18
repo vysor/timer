@@ -3,7 +3,6 @@
 Simple Terminal Timer with ASCII Art Display
 A focus timer and stopwatch that runs in your terminal with beautiful ASCII art.
 """
-import datetime
 import os
 import sys
 import threading
@@ -140,7 +139,10 @@ def stopwatch():
     stop_event = threading.Event()
     
     def wait_for_input():
-        input()
+        try:
+            input()
+        except (EOFError, KeyboardInterrupt):
+            pass
         stop_event.set()
     
     input_thread = threading.Thread(target=wait_for_input)
@@ -182,9 +184,6 @@ def focus_timer(duration_minutes):
     
     while time.time() < end_time:
         remaining = end_time - time.time()
-        if remaining < 0:
-            remaining = 0
-        
         time_str = format_time(remaining)
         elapsed = total_seconds - remaining
         
