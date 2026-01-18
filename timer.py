@@ -6,6 +6,7 @@ A focus timer and stopwatch that runs in your terminal with beautiful ASCII art.
 import datetime
 import os
 import sys
+import threading
 import time
 
 # ASCII art digits (0-9) for timer display
@@ -136,7 +137,6 @@ def stopwatch():
     
     start_time = time.time()
     # Start async input wait
-    import threading
     stop_event = threading.Event()
     
     def wait_for_input():
@@ -152,7 +152,7 @@ def stopwatch():
         time_str = format_time(elapsed)
         
         # Display ASCII art time
-        print("\033[H\033[J", end="")  # Clear screen using ANSI codes
+        clear_screen()
         print("\n" + "="*60)
         print("STOPWATCH".center(60))
         print("="*60 + "\n")
