@@ -108,6 +108,8 @@ def draw_ascii_time(time_str):
 
 def draw_progress_bar(elapsed, total, width=50):
     """Draw a progress bar"""
+    if total <= 0:
+        return "[" + "░" * width + "] 0%"
     progress = min(elapsed / total, 1.0)
     filled = int(width * progress)
     bar = "█" * filled + "░" * (width - filled)
